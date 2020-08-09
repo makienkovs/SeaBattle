@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Sea Battle</string>
+    <string name="ManvsAndroid">Man VS Android</string>
+    <string name="ManvsMan">Man VS Man</string>
+    <string name="ContinueGame">Continue Game</string>
+    <string name="Vibration">Vibration</string>
+    <string name="Sound">Sound</string>
+    <string name="Settings">Settings</string>
+    <string name="Info">Information</string>
+    <string name="RulesTitle">Rules</string>
+    <string name="Rules">
+        In the game area, you need to place your fleet, which includes one four-deck ship, two three-deck, three two-deck and four single-deck. Each deck of the ship occupies one cell.\nShips are initially placed automatically, it can be moved and placed as you like, as long as there is one free cell between the ships.\nThe game begins after the placement. You take turns shooting blindly. If you hit the ship, make another move. Your task is to destroy the enemy\'s fleet faster than he will destroy yours. Good luck!"
+    </string>
+    <string name="NoGame">No game to continue!</string>
+    <string name="CantRotate">Can\'t rotate!</string>
+    <string name="Pwa">Player\'s water area</string>
+    <string name="Awa">Android\'s water area</string>
+    <string name="Fpwa">First player\'s water area</string>
+    <string name="Spwa">Second player\'s water area</string>
+    <string name="Win">You win!</string>
+    <string name="Lose">You lose!</string>
+    <string name="Fpw">First player win!</string>
+    <string name="Spw">Second player win!</string>
+    <string name="Pv">Player\'s victories</string>
+    <string name="Av">Android\'s victories</string>
+    <string name="Fpv">First player\'s victories</string>
+    <string name="Spv">Second player\'s victories</string>
+</resources>

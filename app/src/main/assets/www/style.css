@@ -1,0 +1,191 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+}
+
+#main {
+    z-index: -999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(118, 99, 193);
+    font-style: italic;
+    font-weight: bold;
+}
+
+.wood {
+    background: url('image/wood.jpg') center 100% no-repeat;
+    background-size: cover;
+}
+
+.wrap {
+    background: url('image/field.png') center 100% no-repeat;
+    background-size: cover;
+}
+
+#info{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
+
+#buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buttons {
+    border: 1px solid;
+    border-radius: 10%;
+}
+
+#change {
+    background: url('image/rotate.png') center 100% no-repeat;
+    background-size: cover;
+}
+
+#change:active {
+    background: url('image/rotate_active.png') center 100% no-repeat;
+    background-size: cover;
+}
+
+#reset {
+    background: url('image/reset.png') center 100% no-repeat;
+    background-size: cover;
+}
+
+#reset:active {
+    background: url('image/reset_active.png') center 100% no-repeat;
+    background-size: cover;
+}
+
+#rules {
+    background: url('image/rules.png') center 100% no-repeat;
+    background-size: cover;
+}
+
+#rules:active {
+    background: url('image/rules_active.png') center 100% no-repeat;
+    background-size: cover;
+}
+
+#play {
+    background: url('image/play.png') center 100% no-repeat;
+    background-size: cover;
+}
+
+#play:active {
+    background: url('image/play_active.png') center 100% no-repeat;
+    background-size: cover;
+}
+
+#gameFields {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gameField {
+    background: url('image/field_game.png') center 100% no-repeat;
+    background-size: cover;
+}
+
+#user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#ai {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#setting {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#settingField {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.buttonsRow {
+    display: flex;
+    justify-content: space-around;
+}
+
+.column {
+    float: left;
+}
+
+.ceil {
+    text-align: center;
+}
+
+.s1 {
+    background: url('image/1.png') center 100% no-repeat;
+    background-size: cover;
+}
+
+.s1s {
+    background: url('image/1s.png') center 100% no-repeat;
+    background-size: cover;
+}
+
+.s2 {
+    background: url('image/2.png') center 100% no-repeat;
+    background-size: cover;
+}
+
+.s3 {
+    background: url('image/3.png') center 100% no-repeat;
+    background-size: cover;
+}
+
+.s4 {
+    background: url('image/4.png') center 100% no-repeat;
+    background-size: cover;
+}
+
+.left {
+    background: url('image/left.png') center no-repeat;
+    background-size: contain;
+}
+
+.right {
+    background: url('image/right.png') center no-repeat;
+    background-size: contain;
+}
+
+.final1 {
+    background: url('image/final1.jpg') center no-repeat;
+    background-size: contain;
+}
+
+.final2 {
+    background: url('image/final2.jpg') center no-repeat;
+    background-size: contain;
+}
+
+.final3 {
+    background: url('image/final3.jpg') center no-repeat;
+    background-size: contain;
+}
+
+.final4 {
+    background: url('image/final4.jpg') center no-repeat;
+    background-size: contain;
+}
+
+.final5 {
+    background: url('image/final5.jpg') center no-repeat;
+    background-size: contain;
+}

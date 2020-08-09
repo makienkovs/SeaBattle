@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Морской бой</string>
+    <string name="ManvsAndroid">Игра против Андроида</string>
+    <string name="ManvsMan">Игра с другом</string>
+    <string name="ContinueGame">Продолжить игру</string>
+    <string name="Vibration">Вибрация</string>
+    <string name="Sound">Звук</string>
+    <string name="Settings">Настройки</string>
+    <string name="Info">Информация</string>
+    <string name="RulesTitle">Правила игры</string>
+    <string name="Rules">
+        В игровой акватории требуется разместить свой флот в который входят: один четырехпалубный корабль, два трехпалубных, три двухпалубных и четыре однопалубных. Каждая палуба корабля занимает одну клетку.\nКорабли изначально расставляются автоматически, их можно передвигать и размещать как угодно, главное, чтобы между кораблями была одна свободная клетка.\nПосле расстановки начинается игра. Вы стреляете в слепую по очереди. Если попадаете в корабль, делаете еще один ход. Ваша задача уничтожить флот противника быстрее, чем он уничтожит ваш. Удачи!
+    </string>
+    <string name="NoGame">Нет сохраненной игры!</string>
+    <string name="CantRotate">Невозможно повернуть!</string>
+    <string name="Pwa">Акватория игрока</string>
+    <string name="Awa">Акватория Андроида</string>
+    <string name="Fpwa">Акватория первого игрока</string>
+    <string name="Spwa">Акватория второго игрока</string>
+    <string name="Win">Вы выиграли!</string>
+    <string name="Lose">Вы проиграли!</string>
+    <string name="Fpw">Выиграл первый игрок!</string>
+    <string name="Spw">Выиграл второй игрок!</string>
+    <string name="Pv">Победы игрока</string>
+    <string name="Av">Победы Андроида</string>
+    <string name="Fpv">Победы первого игрока</string>
+    <string name="Spv">Победы второго игрока</string>
+</resources>
