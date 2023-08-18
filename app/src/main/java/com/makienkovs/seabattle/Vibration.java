@@ -4,8 +4,8 @@ import android.content.Context;
 import android.os.Vibrator;
 
 public class Vibration {
-    private Context context;
-    private boolean vibration;
+    private final Context context;
+    private final boolean vibration;
 
     final static int VIBRATION_SHORT = 50;
     final static int VIBRATION_LONG = 500;

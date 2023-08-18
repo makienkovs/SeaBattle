@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1064678215358",
+    "project_id": "sea-battle-53681",
+    "storage_bucket": "sea-battle-53681.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1064678215358:android:426d64d085ccc3447d98ef",
+        "android_client_info": {
+          "package_name": "com.makienkovs.seabattle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1064678215358-mqpckbt2upqngarjlj1ddm3ha2hih873.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.makienkovs.seabattle",
+            "certificate_hash": "b2c541765714c63317bfa6c0b9930a899da83b6e"
+          }
+        },
+        {
+          "client_id": "1064678215358-n6lls5m7id53qj263ms744u6ckli9ub3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMsbWcOzbB31N_n-GjWdnZ3JQ54NAPbcg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1064678215358-n6lls5m7id53qj263ms744u6ckli9ub3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,11 +1,7 @@
 package com.makienkovs.seabattle;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -15,29 +11,30 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.Switch;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 public class MainActivity extends AppCompatActivity {
-    private static boolean sound = true;
-    private static boolean vibration = true;
+    public static boolean sound = true;
+    public static boolean vibration = true;
     public static final String APP_PREFERENCES = "settings";
     public static final String APP_PREFERENCES_SOUND = "sound";
     public static final String APP_PREFERENCES_VIBRATION = "vibration";
     private SharedPreferences settings;
     private SharedPreferences.Editor editor;
-    Sound soundButtons;
-    Vibration vibrationButtons;
-    int width;
+    private Sound soundButtons;
+    private Vibration vibrationButtons;
 
     @SuppressLint({"SourceLockedOrientationActivity", "CommitPrefEdits"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        new UpdateUtil(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         DisplayMetrics displaymetrics = getResources().getDisplayMetrics();
-        width = displaymetrics.widthPixels;
 
         settings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         editor = settings.edit();
@@ -60,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         soundButtons = new Sound(this, true);
     }
 
+    @SuppressLint("NonConstantResourceId")
     public void changeActivity(View v) {
         final Animation animScale = AnimationUtils.loadAnimation(this, R.anim.scale);
         v.startAnimation(animScale);
@@ -76,15 +74,10 @@ public class MainActivity extends AppCompatActivity {
         } else web.putExtra("Vibration", "off");
 
         switch (button.getId()) {
-            case R.id.mvsa:
-                web.putExtra("URL", "file:///android_asset/www/setting_man.html");
-                break;
-            case R.id.mvsm:
-                web.putExtra("URL", "file:///android_asset/www/setting_man1.html");
-                break;
-            case R.id.continueGame:
-                web.putExtra("URL", "file:///android_asset/www/continue.html");
-                break;
+            case R.id.mvsa -> web.putExtra("URL", "file:///android_asset/www/setting_man.html");
+            case R.id.mvsm -> web.putExtra("URL", "file:///android_asset/www/setting_man1.html");
+            case R.id.continueGame ->
+                    web.putExtra("URL", "file:///android_asset/www/continue.html");
         }
         startActivity(web);
     }
@@ -130,36 +123,23 @@ public class MainActivity extends AppCompatActivity {
             vibrationButtons.vibrate(Vibration.VIBRATION_SHORT);
 
         final View settingsView = getLayoutInflater().inflate(R.layout.settings, null);
-        final Switch soundSwitch = settingsView.findViewById(R.id.soundSwitch);
+        final SwitchCompat soundSwitch = settingsView.findViewById(R.id.soundSwitch);
         soundSwitch.setChecked(sound);
-        soundSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                setSound();
-            }
-        });
+        soundSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> setSound());
 
-        final Switch vibrationSwitch = settingsView.findViewById(R.id.vibrationSwitch);
+        final SwitchCompat vibrationSwitch = settingsView.findViewById(R.id.vibrationSwitch);
         vibrationSwitch.setChecked(vibration);
-        vibrationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                setVibration();
-            }
-        });
+        vibrationSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> setVibration());
 
         new AlertDialog.Builder(this)
                 .setPositiveButton("OK",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                sound = soundSwitch.isChecked();
-                                vibration = vibrationSwitch.isChecked();
-                                if (sound)
-                                    soundButtons.play("tap");
-                                if (vibration)
-                                    vibrationButtons.vibrate(Vibration.VIBRATION_SHORT);
-                            }
+                        (dialog, which) -> {
+                            sound = soundSwitch.isChecked();
+                            vibration = vibrationSwitch.isChecked();
+                            if (sound)
+                                soundButtons.play("tap");
+                            if (vibration)
+                                vibrationButtons.vibrate(Vibration.VIBRATION_SHORT);
                         })
                 .setView(settingsView)
                 .setTitle(R.string.Settings)

@@ -35,7 +35,9 @@ public class WebActivity extends AppCompatActivity {
             @Override public boolean onJsAlert(WebView view, String url, String message, JsResult result)
             { return super.onJsAlert(view, url, message, result); } });
         webView.addJavascriptInterface(webApp, "Android");
-        webView.loadUrl(url);
+        if (url != null) {
+            webView.loadUrl(url);
+        }
     }
 
     @Override

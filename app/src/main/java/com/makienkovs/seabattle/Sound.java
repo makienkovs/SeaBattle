@@ -6,7 +6,7 @@ import android.media.SoundPool;
 import android.util.Log;
 
 public class Sound {
-    private boolean sound;
+    private final boolean sound;
     private SoundPool sounds;
     private int winSound;
     private int loseSound;
@@ -18,7 +18,7 @@ public class Sound {
     private int messageSound;
     private int tapSound;
     private int destroySound;
-    private Context context;
+    private final Context context;
 
     Sound(Context context, boolean sound) {
         this.context = context;

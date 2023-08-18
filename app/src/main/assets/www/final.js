@@ -54,10 +54,12 @@ function mainLogic(){
 
     if (hash[1] == "0"){
         wrap.innerHTML = `<br>${titles[0]} - ${countOfUserWins}<br>${titles[1]} - ${countOfAiWins}`;
-        main.ontouchstart = function () { document.location.replace("setting_man.html") };
+//        main.ontouchstart = function () { document.location.replace("setting_man.html") };
+          main.ontouchstart = function () { Android.showAds("0") };
     } else if (hash[1] == "1") {
         wrap.innerHTML = `<br>${titles[2]} - ${countOfUser1Wins}<br>${titles[3]} - ${countOfUser2Wins}`;
-        main.ontouchstart = function () { document.location.replace("setting_man1.html") };
+//        main.ontouchstart = function () { document.location.replace("setting_man1.html") };
+          main.ontouchstart = function () { Android.showAds("1") };
     }
 }
 

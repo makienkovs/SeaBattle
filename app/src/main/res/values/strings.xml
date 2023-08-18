@@ -25,4 +25,6 @@
     <string name="Av">Android\'s victories</string>
     <string name="Fpv">First player\'s victories</string>
     <string name="Spv">Second player\'s victories</string>
+
+    <string name="ads_id" translatable="false">R-M-1706410-1</string>
 </resources>

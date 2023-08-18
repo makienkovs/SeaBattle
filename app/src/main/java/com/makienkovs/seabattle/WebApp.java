@@ -3,21 +3,26 @@ package com.makienkovs.seabattle;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Gravity;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class WebApp {
-    private Context mContext;
-    private String sound;
-    private String vibration;
+    private final AppCompatActivity mContext;
+    private final String sound;
+    private final String vibration;
     private Sound soundFX;
     private Vibration vibrationFX;
 
     /**
      * Instantiate the interface and set the context
      */
-    WebApp(Context c, String sound, String vibration) {
+    WebApp(AppCompatActivity c, String sound, String vibration) {
         mContext = c;
         this.sound = sound;
         this.vibration = vibration;
@@ -170,5 +175,16 @@ public class WebApp {
     @JavascriptInterface
     public void play(String soundName) {
         soundFX.play(soundName);
+    }
+
+    /**
+     * Show Ads
+     */
+    @JavascriptInterface
+    public void showAds(String info) {
+        Intent intent = new Intent(mContext, AdsActivity.class);
+        intent.putExtra("info", info);
+        mContext.startActivity(intent);
+        mContext.finish();
     }
 }
