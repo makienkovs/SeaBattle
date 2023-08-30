@@ -6,12 +6,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         new UpdateUtil(this);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        DisplayMetrics displaymetrics = getResources().getDisplayMetrics();
-
         settings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         editor = settings.edit();
         soundButtons = new Sound(this, true);
@@ -58,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("NonConstantResourceId")
-    public void changeActivity(View v) {
+    public void changeActivity(@NonNull View v) {
         final Animation animScale = AnimationUtils.loadAnimation(this, R.anim.scale);
         v.startAnimation(animScale);
         Button button = (Button) v;
@@ -113,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             vibrationButtons.vibrate(Vibration.VIBRATION_SHORT);
     }
 
-    public void settings(View v) {
+    public void settings(@NonNull View v) {
         final Animation animScale = AnimationUtils.loadAnimation(this, R.anim.scale);
         v.startAnimation(animScale);
 

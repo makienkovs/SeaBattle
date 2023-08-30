@@ -3,8 +3,12 @@ package com.makienkovs.seabattle
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isGone
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
 import com.yandex.mobile.ads.common.AdRequest
@@ -20,13 +24,16 @@ class AdsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_ads)
         window.navigationBarColor = Color.BLACK
         val info = intent.getStringExtra("info") ?: "0"
-
+        val progress: ProgressBar = findViewById(R.id.ads_progress)
         val mInterstitialAd = InterstitialAd(this)
         mInterstitialAd.setAdUnitId(getString(R.string.ads_id))
         val adRequest = AdRequest.Builder().build()
+        var isShow = false
         mInterstitialAd.setInterstitialAdEventListener( object : InterstitialAdEventListener{
             override fun onAdLoaded() {
                 Log.d("AdsActivity", "onAdLoaded")
+                isShow = true
+                progress.isGone = true
                 mInterstitialAd.show()
             }
 
@@ -62,6 +69,11 @@ class AdsActivity : AppCompatActivity() {
             }
         })
         mInterstitialAd.loadAd(adRequest)
+        Handler(Looper.getMainLooper()).postDelayed({
+             if (!isShow) {
+                 continueGame(info)
+             }
+        }, 5000)
     }
 
     private fun continueGame(info: String) {
@@ -79,5 +91,6 @@ class AdsActivity : AppCompatActivity() {
             "1" -> web.putExtra("URL", "file:///android_asset/www/setting_man1.html")
         }
         startActivity(web)
+        finish()
     }
 }
