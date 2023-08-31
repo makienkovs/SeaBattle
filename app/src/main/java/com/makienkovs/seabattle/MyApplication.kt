@@ -10,10 +10,15 @@ class MyApplication: Application() {
 
     override fun onCreate() {
         super.onCreate()
-
+        instance = this
         FirebaseApp.initializeApp(this)
         MobileAds.initialize(this) {
             Log.d("MyApplication", "SDK initialized");
         }
+    }
+
+    companion object {
+        const val tag: String = "MyApplication"
+        lateinit var instance: Application
     }
 }
