@@ -45,12 +45,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         writeParams();
-        soundButtons.release();
+        if (soundButtons != null) {
+            soundButtons.release();
+        }
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         readParams();
         soundButtons = new Sound(this, true);
     }
@@ -90,9 +92,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void writeParams() {
-        editor.putBoolean(APP_PREFERENCES_SOUND, sound);
-        editor.putBoolean(APP_PREFERENCES_VIBRATION, vibration);
-        editor.apply();
+        if (editor != null) {
+            editor.putBoolean(APP_PREFERENCES_SOUND, sound);
+            editor.putBoolean(APP_PREFERENCES_VIBRATION, vibration);
+            editor.apply();
+        }
     }
 
     public void setSound() {

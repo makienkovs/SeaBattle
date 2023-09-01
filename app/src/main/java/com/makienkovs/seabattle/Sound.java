@@ -5,6 +5,8 @@ import android.media.AudioAttributes;
 import android.media.SoundPool;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 public class Sound {
     private final boolean sound;
     private SoundPool sounds;
@@ -48,20 +50,23 @@ public class Sound {
         destroySound = sounds.load(context, R.raw.destroy, 1);
     }
 
-    void play(String soundName) {
+    void play(@NonNull String soundName) {
         int s;
-        switch (soundName){
-            case "win": s = winSound; break;
-            case "lose": s = loseSound; break;
-            case "away": s = awaySound; break;
-            case "click": s = clickSound; break;
-            case "clickclack": s = clickclackSound; break;
-            case "set": s = setSound; break;
-            case "hit": s = hitSound; break;
-            case "message": s = messageSound; break;
-            case "tap": s = tapSound; break;
-            case "destroy": s = destroySound; break;
-            default: s = 0; Log.d("Unexpected value: ", ""+ soundName);
+        switch (soundName) {
+            case "win" -> s = winSound;
+            case "lose" -> s = loseSound;
+            case "away" -> s = awaySound;
+            case "click" -> s = clickSound;
+            case "clickclack" -> s = clickclackSound;
+            case "set" -> s = setSound;
+            case "hit" -> s = hitSound;
+            case "message" -> s = messageSound;
+            case "tap" -> s = tapSound;
+            case "destroy" -> s = destroySound;
+            default -> {
+                s = 0;
+                Log.d("Unexpected value: ", "" + soundName);
+            }
         }
 
         if (s > 0 && sound) {
@@ -75,7 +80,9 @@ public class Sound {
     }
 
     void release() {
-        sounds.release();
-        sounds = null;
+        if (sounds != null) {
+            sounds.release();
+            sounds = null;
+        }
     }
 }
