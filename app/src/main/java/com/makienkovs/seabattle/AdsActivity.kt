@@ -11,13 +11,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.ktx.Firebase
-import com.yandex.mobile.ads.common.AdRequest
+import com.yandex.mobile.ads.common.AdError
+import com.yandex.mobile.ads.common.AdRequestConfiguration
 import com.yandex.mobile.ads.common.AdRequestError
 import com.yandex.mobile.ads.common.ImpressionData
 import com.yandex.mobile.ads.interstitial.InterstitialAd
 import com.yandex.mobile.ads.interstitial.InterstitialAdEventListener
+import com.yandex.mobile.ads.interstitial.InterstitialAdLoadListener
+import com.yandex.mobile.ads.interstitial.InterstitialAdLoader
 
 class AdsActivity : AppCompatActivity() {
+
+    private var mInterstitialAd: InterstitialAd? = null
+    private var mInterstitialAdLoader: InterstitialAdLoader? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,55 +31,63 @@ class AdsActivity : AppCompatActivity() {
         window.navigationBarColor = Color.BLACK
         val info = intent.getStringExtra("info") ?: "0"
         val progress: ProgressBar = findViewById(R.id.ads_progress)
-        val mInterstitialAd = InterstitialAd(this)
-        mInterstitialAd.setAdUnitId(getString(R.string.ads_id))
-        val adRequest = AdRequest.Builder().build()
         var isShow = false
-        mInterstitialAd.setInterstitialAdEventListener( object : InterstitialAdEventListener{
-            override fun onAdLoaded() {
-                Log.d("AdsActivity", "onAdLoaded")
-                isShow = true
-                progress.isGone = true
-                mInterstitialAd.show()
-            }
 
-            override fun onAdFailedToLoad(error: AdRequestError) {
-                Log.d("AdsActivity", "AdRequestError ${error.description}")
-                Firebase.crashlytics.recordException(IllegalStateException("AdRequestError ${error.description}"))
-                continueGame(info)
-            }
+        mInterstitialAdLoader = InterstitialAdLoader(this).apply {
+            setAdLoadListener(object : InterstitialAdLoadListener {
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    Log.d("AdsActivity", "onAdLoaded")
+                    mInterstitialAd = interstitialAd
+                    isShow = true
+                    progress.isGone = true
+                    interstitialAd.show(this@AdsActivity)
+                    interstitialAd.setAdEventListener(object : InterstitialAdEventListener {
+                        override fun onAdShown() {
+                            Log.d("AdsActivity", "onAdShown")
+                        }
 
-            override fun onAdShown() {
-                Log.d("AdsActivity", "onAdShown")
-            }
+                        override fun onAdFailedToShow(error: AdError) {
+                            Log.d("AdsActivity", "onAdFailedToShow")
+                        }
 
-            override fun onAdDismissed() {
-                Log.d("AdsActivity", "onAdDismissed")
-                continueGame(info)
-            }
+                        override fun onAdDismissed() {
+                            Log.d("AdsActivity", "onAdDismissed")
+                            continueGame(info)
+                        }
 
-            override fun onAdClicked() {
-                Log.d("AdsActivity", "onAdClicked")
-            }
+                        override fun onAdClicked() {
+                            Log.d("AdsActivity", "onAdClicked")
+                        }
 
-            override fun onLeftApplication() {
-                Log.d("AdsActivity", "onLeftApplication")
-            }
+                        override fun onAdImpression(data: ImpressionData?) {
+                            Log.d("AdsActivity", "ImpressionData ${data?.rawData}")
+                        }
+                    })
+                }
 
-            override fun onReturnedToApplication() {
-                Log.d("AdsActivity", "onReturnedToApplication")
-            }
+                override fun onAdFailedToLoad(adRequestError: AdRequestError) {
+                    Log.d("AdsActivity", "AdRequestError ${adRequestError.description}")
+                    Firebase.crashlytics.recordException(Throwable("AdRequestError ${adRequestError.description}"))
+                    continueGame(info)
+                }
+            })
+        }
+        val adRequestConfiguration = AdRequestConfiguration.Builder(getString(R.string.ads_id)).build()
+        mInterstitialAdLoader?.loadAd(adRequestConfiguration)
 
-            override fun onImpression(impressionData: ImpressionData?) {
-                Log.d("AdsActivity", "ImpressionData ${impressionData?.rawData}")
-            }
-        })
-        mInterstitialAd.loadAd(adRequest)
         Handler(Looper.getMainLooper()).postDelayed({
              if (!isShow) {
                  continueGame(info)
              }
         }, 5000)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mInterstitialAdLoader?.setAdLoadListener(null)
+        mInterstitialAdLoader = null
+        mInterstitialAd?.setAdEventListener(null)
+        mInterstitialAd = null
     }
 
     private fun continueGame(info: String) {
