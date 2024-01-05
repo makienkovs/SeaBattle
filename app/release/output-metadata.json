@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 13,
-      "versionName": "1.0.6",
-      "outputFile": "seabattle-v1.0.6-RELEASE.apk"
+      "versionCode": 14,
+      "versionName": "1.0.7",
+      "outputFile": "seabattle-v1.0.7-RELEASE.apk"
     }
   ],
   "elementType": "File"
