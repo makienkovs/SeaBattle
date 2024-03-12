@@ -11,10 +11,27 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 14,
-      "versionName": "1.0.7",
-      "outputFile": "seabattle-v1.0.7-RELEASE.apk"
+      "versionCode": 16,
+      "versionName": "1.0.9",
+      "outputFile": "seabattle-v1.0.9-RELEASE.apk"
     }
   ],
-  "elementType": "File"
+  "elementType": "File",
+  "baselineProfiles": [
+    {
+      "minApi": 28,
+      "maxApi": 30,
+      "baselineProfiles": [
+        "baselineProfiles/1/seabattle-v1.0.9-RELEASE.dm"
+      ]
+    },
+    {
+      "minApi": 31,
+      "maxApi": 2147483647,
+      "baselineProfiles": [
+        "baselineProfiles/0/seabattle-v1.0.9-RELEASE.dm"
+      ]
+    }
+  ],
+  "minSdkVersionForDexing": 24
 }

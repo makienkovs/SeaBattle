@@ -9,10 +9,12 @@ import androidx.lifecycle.LifecycleOwner
 import com.google.android.play.core.appupdate.AppUpdateInfo
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.InstallStateUpdatedListener
+import com.google.android.play.core.appupdate.AppUpdateOptions
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.InstallStatus
 import com.google.android.play.core.install.model.UpdateAvailability
+import ru.rustore.sdk.appupdate.manager.RuStoreAppUpdateManager
+import ru.rustore.sdk.appupdate.manager.factory.RuStoreAppUpdateManagerFactory
 
 enum class AppStore {
     GOOGLE,
@@ -29,35 +31,7 @@ class UpdateUtil(private val activity: AppCompatActivity) {
     }
 
     private var googleUpdateManager: AppUpdateManager? = null
-    private var rustoreUpdateManager: ru.rustore.sdk.appupdate.manager.RuStoreAppUpdateManager? =
-        null
-
-    private val googleInstallStateUpdatedListener = InstallStateUpdatedListener { state ->
-        Log.d(TAG, "google onStateUpdate ${state.installStatus()}")
-        if (state.installStatus() == InstallStatus.DOWNLOADED) {
-            googleUpdateManager?.completeUpdate()
-                ?.addOnSuccessListener {
-                    Log.d(TAG, "Google update success")
-                }
-                ?.addOnFailureListener { throwable ->
-                    Log.d(TAG, "Google update failure ${throwable.message}")
-                }
-        }
-    }
-
-    private var rustoreInstallStateUpdatedListener =
-        ru.rustore.sdk.appupdate.listener.InstallStateUpdateListener { state ->
-            Log.d(TAG, "rustore onStateUpdate ${state.installStatus}")
-            if (state.installStatus == ru.rustore.sdk.appupdate.model.InstallStatus.DOWNLOADED) {
-                rustoreUpdateManager?.completeUpdate()
-                    ?.addOnSuccessListener {
-                        Log.d(TAG, "Rustrore update success")
-                    }
-                    ?.addOnFailureListener { throwable ->
-                        Log.d(TAG, "Rustrore update failure ${throwable.message}")
-                    }
-            }
-        }
+    private var rustoreUpdateManager: RuStoreAppUpdateManager? = null
 
     init {
         activity.lifecycle.addObserver(object : LifecycleEventObserver {
@@ -68,25 +42,13 @@ class UpdateUtil(private val activity: AppCompatActivity) {
                         AppStore.RUSTORE -> checkUpdatesRustore()
                         else -> Log.d(TAG, "NO IN APP UPDATE")
                     }
-                } else if (event == Lifecycle.Event.ON_DESTROY) {
-                    when (appStore) {
-                        AppStore.GOOGLE -> googleUpdateManager?.unregisterListener(
-                            googleInstallStateUpdatedListener
-                        )
-                        AppStore.RUSTORE -> rustoreUpdateManager?.unregisterListener(
-                            rustoreInstallStateUpdatedListener
-                        )
-                        else -> Log.d(TAG, "NO IN APP UPDATE")
-                    }
                 }
             }
         })
     }
 
     private fun checkUpdatesRustore() {
-        rustoreUpdateManager =
-            ru.rustore.sdk.appupdate.manager.factory.RuStoreAppUpdateManagerFactory.create(activity)
-        rustoreUpdateManager?.registerListener(rustoreInstallStateUpdatedListener)
+        rustoreUpdateManager = RuStoreAppUpdateManagerFactory.create(activity)
         rustoreUpdateManager?.getAppUpdateInfo()
             ?.addOnSuccessListener { appUpdateInfo ->
                 if (appUpdateInfo.updateAvailability == ru.rustore.sdk.appupdate.model.UpdateAvailability.UPDATE_AVAILABLE) {
@@ -112,17 +74,15 @@ class UpdateUtil(private val activity: AppCompatActivity) {
 
 
     private fun checkUpdatesGoogle() {
-        Log.d(TAG, "checkUpdates")
         googleUpdateManager = AppUpdateManagerFactory.create(activity)
-        googleUpdateManager?.registerListener(googleInstallStateUpdatedListener)
         googleUpdateManager?.appUpdateInfo?.addOnSuccessListener { appUpdateInfo: AppUpdateInfo ->
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
                 Log.d(TAG, "UpdateAvailability.UPDATE_AVAILABLE && AppUpdateType.IMMEDIATE")
                 try {
                     googleUpdateManager?.startUpdateFlowForResult(
                         appUpdateInfo,
-                        AppUpdateType.IMMEDIATE,
                         activity,
+                        AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build(),
                         RC_APP_UPDATE
                     )
                     Log.d(TAG, "mAppUpdateManager.startUpdateFlowForResult: something else")
