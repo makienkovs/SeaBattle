@@ -9,8 +9,6 @@ import android.util.Log
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isGone
-import com.google.firebase.crashlytics.ktx.crashlytics
-import com.google.firebase.ktx.Firebase
 import com.yandex.mobile.ads.common.AdError
 import com.yandex.mobile.ads.common.AdRequestConfiguration
 import com.yandex.mobile.ads.common.AdRequestError
@@ -46,7 +44,7 @@ class AdsActivity : AppCompatActivity() {
                             Log.d("AdsActivity", "onAdShown")
                         }
 
-                        override fun onAdFailedToShow(error: AdError) {
+                        override fun onAdFailedToShow(adError: AdError) {
                             Log.d("AdsActivity", "onAdFailedToShow")
                         }
 
@@ -59,15 +57,14 @@ class AdsActivity : AppCompatActivity() {
                             Log.d("AdsActivity", "onAdClicked")
                         }
 
-                        override fun onAdImpression(data: ImpressionData?) {
-                            Log.d("AdsActivity", "ImpressionData ${data?.rawData}")
+                        override fun onAdImpression(impressionData: ImpressionData?) {
+                            Log.d("AdsActivity", "ImpressionData ${impressionData?.rawData}")
                         }
                     })
                 }
 
-                override fun onAdFailedToLoad(adRequestError: AdRequestError) {
-                    Log.d("AdsActivity", "AdRequestError ${adRequestError.description}")
-                    Firebase.crashlytics.recordException(Throwable("AdRequestError ${adRequestError.description}"))
+                override fun onAdFailedToLoad(error: AdRequestError) {
+                    Log.d("AdsActivity", "AdRequestError ${error.description}")
                     continueGame(info)
                 }
             })

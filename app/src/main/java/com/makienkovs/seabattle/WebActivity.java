@@ -25,6 +25,12 @@ public class WebActivity extends AppCompatActivity {
         String url = getIntent().getStringExtra("URL");
         String sound = getIntent().getStringExtra("Sound");
         String vibration = getIntent().getStringExtra("Vibration");
+        if (sound == null) {
+            sound = "off";
+        }
+        if (vibration == null) {
+            vibration = "off";
+        }
         webApp = new WebApp(this, sound, vibration);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);

@@ -1,11 +1,8 @@
 package com.makienkovs.seabattle;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.Gravity;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
