@@ -16,30 +16,25 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import ru.rustore.sdk.appupdate.manager.RuStoreAppUpdateManager
 import ru.rustore.sdk.appupdate.manager.factory.RuStoreAppUpdateManagerFactory
 
-enum class AppStore {
-    GOOGLE,
-    RUSTORE,
-    NASHSTORE
-}
-
 class UpdateUtil(private val activity: AppCompatActivity) {
 
     companion object {
         private const val RC_APP_UPDATE = 121
         private const val TAG = "UpdateUtil"
-        val appStore = AppStore.GOOGLE
     }
 
     private var googleUpdateManager: AppUpdateManager? = null
     private var rustoreUpdateManager: RuStoreAppUpdateManager? = null
 
     init {
+        Log.d(TAG, "UpdateUtil init")
+
         activity.lifecycle.addObserver(object : LifecycleEventObserver {
             override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
                 if (event == Lifecycle.Event.ON_CREATE) {
-                    when (appStore) {
-                        AppStore.GOOGLE -> checkUpdatesGoogle()
-                        AppStore.RUSTORE -> checkUpdatesRustore()
+                    when (BuildConfig.STORE_TYPE) {
+                        "GOOGLE" -> checkUpdatesGoogle()
+                        "RUSTORE" -> checkUpdatesRustore()
                         else -> Log.d(TAG, "NO IN APP UPDATE")
                     }
                 }
@@ -48,6 +43,7 @@ class UpdateUtil(private val activity: AppCompatActivity) {
     }
 
     private fun checkUpdatesRustore() {
+        Log.d(TAG, "checkUpdatesRustore")
         rustoreUpdateManager = RuStoreAppUpdateManagerFactory.create(activity)
         rustoreUpdateManager?.getAppUpdateInfo()
             ?.addOnSuccessListener { appUpdateInfo ->
@@ -67,17 +63,19 @@ class UpdateUtil(private val activity: AppCompatActivity) {
                     }
                 }
             }
-        ?.addOnFailureListener { error ->
-            Log.d(TAG, "checkUpdatesRustore addOnFailureListener error: $error")
-        }
+            ?.addOnFailureListener { error ->
+                Log.d(TAG, "checkUpdatesRustore addOnFailureListener error: $error")
+            }
     }
 
 
     private fun checkUpdatesGoogle() {
+        Log.d(TAG, "checkUpdatesGoogle")
         googleUpdateManager = AppUpdateManagerFactory.create(activity)
+        Log.d(TAG, "$googleUpdateManager")
         googleUpdateManager?.appUpdateInfo?.addOnSuccessListener { appUpdateInfo: AppUpdateInfo ->
             if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
-                Log.d(TAG, "UpdateAvailability.UPDATE_AVAILABLE && AppUpdateType.IMMEDIATE")
+                Log.d(TAG, "checkUpdatesGoogle UPDATE_AVAILABLE")
                 try {
                     googleUpdateManager?.startUpdateFlowForResult(
                         appUpdateInfo,
@@ -85,16 +83,18 @@ class UpdateUtil(private val activity: AppCompatActivity) {
                         AppUpdateOptions.newBuilder(AppUpdateType.IMMEDIATE).build(),
                         RC_APP_UPDATE
                     )
-                    Log.d(TAG, "mAppUpdateManager.startUpdateFlowForResult: something else")
+                    Log.d(TAG, "checkUpdatesGoogle startUpdateFlowForResult")
                 } catch (e: SendIntentException) {
-                    Log.d(TAG, "IntentSender.SendIntentException: " + e.message)
+                    Log.d(TAG, "checkUpdatesGoogle SendIntentException: ${e.message}")
                 }
             } else if (appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED) {
-                Log.d(TAG, "appUpdateInfo.installStatus() == InstallStatus.DOWNLOADED")
+                Log.d(TAG, "checkUpdatesGoogle DOWNLOADED")
                 googleUpdateManager?.completeUpdate()
             } else {
-                Log.d(TAG, "checkForAppUpdateAvailability: something else " + appUpdateInfo.updateAvailability())
+                Log.d(TAG, "checkUpdatesGoogle: something else ${appUpdateInfo.updateAvailability()}")
             }
+        }?.addOnFailureListener { error ->
+            Log.d(TAG, "checkUpdatesGoogle addOnFailureListener error: $error")
         }
     }
 }
