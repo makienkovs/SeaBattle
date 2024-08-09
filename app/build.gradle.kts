@@ -15,8 +15,8 @@ android {
         applicationId = "com.makienkovs.seabattle"
         minSdk = 24
         targetSdk = 34
-        versionCode = 20
-        versionName = "1.1.0"
+        versionCode = 21
+        versionName = "1.1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -111,7 +111,7 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics-ktx:22.0.2")
 
     //Yandex Ads
-    implementation("com.yandex.android:mobileads:7.1.0")
+    implementation("com.yandex.android:mobileads:7.3.0")
 
     //Image
     implementation("com.squareup.picasso:picasso:2.71828")
