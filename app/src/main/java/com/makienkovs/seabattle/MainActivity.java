@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,13 +29,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
         new UpdateUtil(this);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         settings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         editor = settings.edit();
         soundButtons = new Sound(this, true);
         vibrationButtons = new Vibration(this, true);
+
+        findViewById(R.id.mvsa).setOnClickListener(v -> changeActivity(v, "file:///android_asset/www/setting_man.html"));
+        findViewById(R.id.mvsm).setOnClickListener(v -> changeActivity(v, "file:///android_asset/www/setting_man1.html"));
+        findViewById(R.id.continueGame).setOnClickListener(v -> changeActivity(v, "file:///android_asset/www/continue.html"));
         readParams();
     }
 
@@ -58,10 +60,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("NonConstantResourceId")
-    public void changeActivity(@NonNull View v) {
+    public void changeActivity(@NonNull View v, String url) {
         final Animation animScale = AnimationUtils.loadAnimation(this, R.anim.scale);
         v.startAnimation(animScale);
-        Button button = (Button) v;
         Intent web = new Intent(MainActivity.this, WebActivity.class);
         if (sound) {
             web.putExtra("Sound", "on");
@@ -73,12 +74,7 @@ public class MainActivity extends AppCompatActivity {
             vibrationButtons.vibrate(Vibration.VIBRATION_SHORT);
         } else web.putExtra("Vibration", "off");
 
-        switch (button.getId()) {
-            case R.id.mvsa -> web.putExtra("URL", "file:///android_asset/www/setting_man.html");
-            case R.id.mvsm -> web.putExtra("URL", "file:///android_asset/www/setting_man1.html");
-            case R.id.continueGame ->
-                    web.putExtra("URL", "file:///android_asset/www/continue.html");
-        }
+        web.putExtra("URL", url);
         startActivity(web);
     }
 

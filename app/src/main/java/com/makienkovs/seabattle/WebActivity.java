@@ -19,8 +19,8 @@ public class WebActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_web);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        setContentView(R.layout.activity_web);
         WebView webView = findViewById(R.id.web);
         String url = getIntent().getStringExtra("URL");
         String sound = getIntent().getStringExtra("Sound");

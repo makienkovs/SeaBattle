@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 22,
-      "versionName": "1.1.2",
-      "outputFile": "SeaBattle_1.1.2_nashstore.apk"
+      "versionCode": 23,
+      "versionName": "1.1.3",
+      "outputFile": "SeaBattle_nashstore_1.1.3.apk"
     }
   ],
   "elementType": "File",
@@ -22,16 +22,16 @@
       "minApi": 28,
       "maxApi": 30,
       "baselineProfiles": [
-        "baselineProfiles/1/SeaBattle_1.1.2_nashstore.dm"
+        "baselineProfiles/1/SeaBattle_nashstore_1.1.3.dm"
       ]
     },
     {
       "minApi": 31,
       "maxApi": 2147483647,
       "baselineProfiles": [
-        "baselineProfiles/0/SeaBattle_1.1.2_nashstore.dm"
+        "baselineProfiles/0/SeaBattle_nashstore_1.1.3.dm"
       ]
     }
   ],
-  "minSdkVersionForDexing": 24
+  "minSdkVersionForDexing": 29
 }

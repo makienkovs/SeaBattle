@@ -1,6 +1,7 @@
 package com.makienkovs.seabattle
 
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
@@ -23,8 +24,10 @@ class AdsActivity : AppCompatActivity() {
     private var mInterstitialAd: InterstitialAd? = null
     private var mInterstitialAdLoader: InterstitialAdLoader? = null
 
+    @Suppress("DEPRECATION")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         setContentView(R.layout.activity_ads)
         window.navigationBarColor = Color.BLACK
         val info = intent.getStringExtra("info") ?: "0"

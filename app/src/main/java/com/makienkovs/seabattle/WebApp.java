@@ -55,17 +55,17 @@ public class WebApp {
         String Av = mContext.getResources().getString(R.string.Av);
         String Fpv = mContext.getResources().getString(R.string.Fpv);
         String Spv = mContext.getResources().getString(R.string.Spv);
-        switch (title) {
-            case "Pwa": return Pwa;
-            case "Awa": return Awa;
-            case "Fpwa": return Fpwa;
-            case "Spwa": return Spwa;
-            case "Pv": return Pv;
-            case "Av": return Av;
-            case "Fpv": return Fpv;
-            case "Spv": return Spv;
-            default: return "undefined";
-        }
+        return switch (title) {
+            case "Pwa" -> Pwa;
+            case "Awa" -> Awa;
+            case "Fpwa" -> Fpwa;
+            case "Spwa" -> Spwa;
+            case "Pv" -> Pv;
+            case "Av" -> Av;
+            case "Fpv" -> Fpv;
+            case "Spv" -> Spv;
+            default -> "undefined";
+        };
     }
 
     /**

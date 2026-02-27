@@ -65,7 +65,7 @@ public class Sound {
             case "destroy" -> s = destroySound;
             default -> {
                 s = 0;
-                Log.d("Unexpected value: ", "" + soundName);
+                Log.d("Unexpected value: ", soundName);
             }
         }
 
@@ -73,9 +73,7 @@ public class Sound {
             float volume = 1;
             try {
                 sounds.play(s, volume, volume, 1, 0, 1);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            } catch (Exception ignored) {}
         }
     }
 

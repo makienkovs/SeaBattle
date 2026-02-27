@@ -1,25 +1,37 @@
-package com.makienkovs.seabattle;
+package com.makienkovs.seabattle
 
-import android.content.Context;
-import android.os.Vibrator;
+import android.content.Context
+import android.os.Build
+import android.os.VibrationEffect
+import android.os.Vibrator
+import android.Manifest
+import android.os.VibratorManager
+import androidx.annotation.RequiresPermission
 
-public class Vibration {
-    private final Context context;
-    private final boolean vibration;
+@Suppress("DEPRECATION")
+class Vibration(private val context: Context, private val vibration: Boolean) {
 
-    final static int VIBRATION_SHORT = 50;
-    final static int VIBRATION_LONG = 500;
-
-    Vibration(Context context, boolean vibration) {
-        this.context = context;
-        this.vibration = vibration;
+    companion object {
+        const val VIBRATION_SHORT = 50
+        const val VIBRATION_LONG = 500
     }
 
-    void vibrate(int duration) {
-        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        assert vibrator != null;
-        if (vibrator.hasVibrator() && vibration) {
-            vibrator.vibrate(duration);
+    @RequiresPermission(Manifest.permission.VIBRATE)
+    fun vibrate(duration: Int) {
+        val vibrator: Vibrator? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val vibratorManager = context.getSystemService(VibratorManager::class.java) as VibratorManager
+            vibratorManager.defaultVibrator
+        } else {
+            context.getSystemService(Context.VIBRATOR_SERVICE) as? Vibrator
+        }
+
+        if (vibrator != null && vibrator.hasVibrator() && this.vibration) {
+            vibrator.vibrate(
+                VibrationEffect.createOneShot(
+                    duration.toLong(),
+                    VibrationEffect.DEFAULT_AMPLITUDE
+                )
+            )
         }
     }
 }

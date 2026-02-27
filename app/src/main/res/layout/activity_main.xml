@@ -14,7 +14,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/inset"
-        android:onClick="changeActivity"
         android:text="@string/ManvsAndroid"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -25,7 +24,6 @@
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/inset"
-        android:onClick="changeActivity"
         android:text="@string/ManvsMan"
         app:layout_constraintEnd_toEndOf="@+id/mvsa"
         app:layout_constraintStart_toStartOf="@+id/mvsa"
@@ -37,7 +35,6 @@
         android:layout_height="40dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/inset"
-        android:onClick="changeActivity"
         android:text="@string/ContinueGame"
         app:layout_constraintEnd_toEndOf="@+id/mvsm"
         app:layout_constraintStart_toStartOf="@+id/mvsm"

@@ -13,7 +13,7 @@
         android:screenOrientation="landscape"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="AllowBackup">
+        tools:ignore="AllowBackup, DiscouragedApi">
         <activity
             android:name=".AdsActivity"
             android:exported="false"

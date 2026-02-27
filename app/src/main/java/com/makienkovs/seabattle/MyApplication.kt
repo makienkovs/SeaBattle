@@ -13,12 +13,12 @@ class MyApplication: Application() {
         instance = this
         FirebaseApp.initializeApp(this)
         MobileAds.initialize(this) {
-            Log.d("MyApplication", "SDK initialized");
+            Log.d(TAG, "SDK initialized");
         }
     }
 
     companion object {
-        const val tag: String = "MyApplication"
+        const val TAG = "MyApplication"
         lateinit var instance: Application
     }
 }

@@ -28,7 +28,7 @@ class UpdateUtil(private val activity: AppCompatActivity) {
 
     init {
         Log.d(TAG, "UpdateUtil init")
-
+        @Suppress("KotlinConstantConditions")
         activity.lifecycle.addObserver(object : LifecycleEventObserver {
             override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
                 if (event == Lifecycle.Event.ON_CREATE) {
