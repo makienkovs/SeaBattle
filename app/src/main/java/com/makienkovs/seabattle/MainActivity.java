@@ -1,5 +1,7 @@
 package com.makienkovs.seabattle;
 
+import static com.makienkovs.seabattle.ExtensionsKt.setEdgeToEdge;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class MainActivity extends AppCompatActivity {
     public static boolean sound = true;
@@ -31,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
+        ConstraintLayout layout = findViewById(R.id.main_all);
+        setEdgeToEdge(layout);
+
         new UpdateUtil(this);
         settings = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         editor = settings.edit();

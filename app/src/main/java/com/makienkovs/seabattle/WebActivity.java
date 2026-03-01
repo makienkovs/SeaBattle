@@ -1,6 +1,9 @@
 package com.makienkovs.seabattle;
 
+import static com.makienkovs.seabattle.ExtensionsKt.setEdgeToEdge;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
@@ -21,6 +24,8 @@ public class WebActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_web);
+        ConstraintLayout layout = findViewById(R.id.web_all);
+        setEdgeToEdge(layout);
         WebView webView = findViewById(R.id.web);
         String url = getIntent().getStringExtra("URL");
         String sound = getIntent().getStringExtra("Sound");
@@ -38,8 +43,11 @@ public class WebActivity extends AppCompatActivity {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webView.setWebViewClient(new WebViewClient());
         webView.setWebChromeClient(new WebChromeClient() {
-            @Override public boolean onJsAlert(WebView view, String url, String message, JsResult result)
-            { return super.onJsAlert(view, url, message, result); } });
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+                return super.onJsAlert(view, url, message, result);
+            }
+        });
         webView.addJavascriptInterface(webApp, "Android");
         if (url != null) {
             webView.loadUrl(url);

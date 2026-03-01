@@ -14,8 +14,8 @@ android {
         applicationId = "com.makienkovs.seabattle"
         minSdk = 29
         targetSdk = 36
-        versionCode = 23
-        versionName = "1.1.3"
+        versionCode = 24
+        versionName = "1.1.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -90,7 +90,7 @@ android {
 }
 
 dependencies {
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.1.0"))
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:2.3.10"))
     implementation("androidx.core:core-ktx:1.17.0")
     implementation("androidx.appcompat:appcompat:1.7.1")
     implementation("com.google.android.material:material:1.13.0")

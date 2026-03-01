@@ -9,7 +9,7 @@ import android.os.VibratorManager
 import androidx.annotation.RequiresPermission
 
 @Suppress("DEPRECATION")
-class Vibration(private val context: Context, private val vibration: Boolean) {
+class Vibration(private val context: Context, var vibration: Boolean) {
 
     companion object {
         const val VIBRATION_SHORT = 50

@@ -40,6 +40,7 @@ public class WebApp {
 
     void release() {
         soundFX.release();
+        vibrationFX.setVibration(false);
     }
 
     /**
